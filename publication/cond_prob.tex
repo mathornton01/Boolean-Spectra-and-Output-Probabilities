@@ -1,0 +1,239 @@
+\section{Conditional Output Probabilities}
+The use of circuit output probabilities in digital systems engineering tasks
+in the past has generally centered around the computation of the probabilities of single
+functions. 
+In this section we will use conditional output probability expressions
+to show how some interesting relationships may be derived and we show
+how output probability values may be related to cover sets of Boolean functions.
+Unless otherwise noted, the conditioned quantity will always be dependent
+upon the function of interest.  Therefore, the probability space for the
+conditional output probability, $\wp \{ f | f_c \}$, has a size of $2^{n-m}$ where
+$n$ is the number of dependent variables of $f$ and $m$ is the number of mutually
+dependent variables of $f$ and $f_c$.
+
+\subsection{Output Probabilities of Shannon Co-Factors}
+It is convenient to describe conditional output probabilities by examining the
+output probabilities of cofactor functions as used in the Shannon expansion.
+The Shannon expansion theorem is well known and can be used to define cofactors.
+It is given in Equations \ref{eq:sh_1}, \ref{eq:sh_2}, and \ref{eq:sh_3}.
+
+\begin{equation}
+f(x_1, x_2, \ldots , x_{i-1}, x_i, x_{i+1}, \ldots , x_n) = \overline{x}_i f_0 + x_i f_1 \label{eq:sh_1}
+\end{equation}
+
+\begin{equation}
+f_0 = f(x_1, x_2, \ldots , x_{i-1}, 0, x_{i+1}, \ldots , x_n) \label{eq:sh_2}
+\end{equation}
+
+\begin{equation}
+f_1 = f(x_1, x_2, \ldots , x_{i-1}, 1, x_{i+1}, \ldots , x_n) \label{eq:sh_3}
+\end{equation}
+
+Many other useful functions such as smoothing, consensus, and the Boolean derivative can
+be defined in terms of the cofactors, $f_0$ and $f_1$.  Thus, it is interesting to
+determine the output probability of the cofactors.
+
+Consider the cofactor, $f_1$, for a particular variable, $x_i$.  The output probability
+is computed as the total number of times $f_1 = 1$ divided by $2^{n-1}$ if $f$ is a 
+completely specified function of $n$ variables.  In terms of probability theory,
+this becomes the conditional probability value, $\wp \{f | x_i \}$.  Using Baye's Rule
+the conditional probability may be expressed as given in Equation \ref{eq:baye}.
+Note that $\wp \{ x_i \} \neq 0$ is always necessarily true when Equation \ref{eq:baye} is
+used.  This is due to the fact that the cofactors are always computed in terms of dependent
+$x_i$.  The trivial case where $x_i=0$ and hence $\wp \{ x_i \} = 0$ indicates that $f$ does not
+depend upon $x_i$ and is thus not applicable to Equation \ref{eq:baye}, indeed, in this case
+$x_i$ is not a Boolean variable, it is a Boolean constant.
+
+\begin{equation}
+\wp \{ f | x_i \} = \frac{\wp \{f \cdot x_i \} }{\wp \{x_i \} }   \label{eq:baye}
+\end{equation}
+
+Since it is typical to deal with fully specified functions, $\wp \{ x_i \} = \frac{1}{2}$,
+and Equation \ref{eq:baye} simplifies to $\wp \{ f | x_i \} = 2 \cdot \wp \{f \cdot x_i \}$.
+
+\subsection{Output Probabilities and Covers of Boolean Functions}
+It is possible to compute conditional probabilities for more complex constituent
+functions, $\wp \{ f | f_c \}$.  The use of Baye's theorem allows a very succinct
+method for determining if a given function $f$ covers another function, $f_c$.
+Lemma \ref{baye_cov} states and proves this result.
+
+\begin{lemma}   \label{baye_cov}
+A function $f$ covers another function, $f_c$, if and only if
+$\wp \{f_c | f \} = \wp \{ f \}$.
+\end{lemma}
+
+\noindent
+{\bf Proof:} \\
+By definition, a cover of function $f_c$ by another function, $f$
+means that for all $f_c=1$, $f$ is also at a logic `1' value.
+In terms of conditional probabilities, this is stated as
+$\wp \{ f_c | f \} = 1$.  Substituting this expression into 
+Equation \ref{eq:baye} yields the following result.
+
+\begin{equation}
+\wp \{ f \cdot f_c \} = \wp \{ f \}    \label{eq:cover_result}
+\end{equation}
+
+This substitution is valid for all cases where $f$ and $f_c$ have mutual dependence
+on a common subset of variables.  This dependence assumption prevents $\wp \{ f_c \} =0$.
+It is trivial to ensure dependence since it is only necessary to show that at least
+one common variable is present in some canonical form of $f$ and $f_c$.
+
+\hfill $\Box$
+
+This result can be very useful in synthesis algorithms that require
+efficient means for checking covers.  Depending on the way $f$ and $f_c$
+are represented initially, computing the two probability
+values in Equation \ref{eq:cover_result} may prove to be much faster
+than other methods such checking for intersections using cube sets.
+
+Many logic optimization algorithms rely upon repeatedly computing relationships
+among a set of cubes representing a logic function.  In particular, the computations
+commonly involve determining if cubes are {\em disjoint}, {\em totally redundant},
+or {\em partially redundant}.  In this section, we show that conditional probability
+values may be used to quickly determine which of these three relationships are present
+between any pair of cubes from a set that represent some function, $f$.
+
+The {\em totally redundant} category is really a special case of lemma \ref{baye_cov}.
+In this case we say that a cube, $c_i$, is totally redundant with respect to cube $c_j$
+if $c_j$ covers $c_i$.  Two cubes, $c_i$ and $c_j$ are {\em disjoint} when they each cover
+mutually exclusive portions of the range of the Boolean function $f$.
+Finally, $c_i$ and $c_j$ are {\em partially redundant} if they each cover an intersecting 
+subset of the range of $f$.  The following lemmas show the relationships between the
+conditional probabilities of pairs of cubes and their relationship.
+
+\begin{lemma}   \label{tot_redun}
+Given two cubes $c_i$ and $c_j$ from a cover set of a function $f$,
+$\wp \{ c_i | c_j \} = 1$ if and only if $c_i$ is totally redundant.
+\end{lemma}
+
+\noindent
+{\bf Proof:} \\
+Since $\wp \{ c_j \} \neq 0$, the conditional probability can be computed 
+as:
+
+\begin{equation}
+\wp \{ c_i | c_j \} = \frac{ \wp \{ c_i \cdot c_j \} }{ \wp \{ c_j \}} \label{eq:cub_baye}
+\end{equation}
+
+When cube $c_i$ is totally redundant, $c_i \cdot c_j = c_j$.  Substituting
+this result into Equation \ref{eq:cub_baye} it is seen that
+$\wp \{ c_i | c_j \} = 1$.  
+
+\hfill $\Box$
+
+\begin{lemma}   \label{disjoint}
+Given two cubes $c_i$ and $c_j$ from a cover set of a function $f$,
+$\wp \{ c_i | c_j \} = 0$ if and only if $c_i$ and $c_j$ are disjoint.
+\end{lemma}
+
+\noindent
+{\bf Proof:} \\
+Since $\wp \{ c_j \} \neq 0$, the conditional probability can be computed 
+as:
+
+\begin{equation}
+\wp \{ c_i | c_j \} = \frac{ \wp \{ c_i \cdot c_j \} }{ \wp \{ c_j \}}
+\end{equation}
+
+When the cubes $c_i$ and $c_j$ are disjoint, $c_i \cdot c_j  = 0$.
+Thus, the conditional probability becomes 
+$\wp \{ c_i | c_j \} = \frac{ \wp \{ 0 \} } { \wp \{ c_j \}} = 0$.
+
+\hfill $\Box$
+
+\begin{lemma}   \label{par_redun}
+Given two cubes $c_i$ and $c_j$ from a cover set of a function $f$,
+$\wp \{ c_i | c_j \} = p$, where $p$ lies in the interval $(0,1)$
+if and only if $c_i$ and $c_j$ are partially redundant.
+\end{lemma}
+
+\noindent
+{\bf Proof:} \\
+When $\wp \{ c_i | c_j \} = p$, there is necessarily some dependence between
+$c_i$ and $c_j$, therefore they cannot be disjoint and $\wp \{ c_i | c_j \} \neq 0$.
+Further, since $p < 1$, $c_i$ is not totally redundant.  The only possible remaining
+relationship between $c_i$ and $c_j$ is that they are partially redundant.
+
+\hfill $\Box$
+
+When a cube is a specific minterm, $m_i$, the conditional probability becomes
+$\wp \{ f | m_i \} = 0$ or $\wp \{f | m_i \} = 1$.  This is due to the
+fact that the probability space is reduced in size to $2^{n-n} = 1$, hence
+it consists of a single experiment.  The outcome of this experiment is that the
+function either covers the minterm, or, does not.  Hence, a conditional
+probability, $\wp \{ f | m_i \}$ indicates if the function depends upon $m_i$ and
+the real value of the probability is the same as the Boolean value of the function when it is
+evaluated at that particular minterm.  This result comes directly from the above lemmas 
+since it is impossible for a specific minterm and a function to be partially redundant.
+
+\subsection{Smoothing, Consensus, and Boolean Derivatives}
+Three other operators are important in Boolean algebra and they may be defined
+in terms of cofactors.  These are the Boolean derivative (Boolean difference), 
+the consensus operator (universal quantifier), and the smoothing operator
+(existential quantifier).
+These may each be defined as follows.
+
+\begin{equation}
+\frac{\partial{f}}{\partial{x_i}} = f_0 \oplus f_1  \label{eq:bool_diff}
+\end{equation}
+
+\begin{equation}
+C_{x_i}(f) = f_0 \cdot f_1  \label{eq:bool_con}
+\end{equation}
+
+\begin{equation}
+S_{x_i}(f) = f_0 + f_1 \label{eq:bool_smooth}
+\end{equation}
+
+These operations are interrelated in the Boolean domain as expressed in Equation \ref{eq:con_rel}.
+
+\begin{equation}
+\overline{C_{x_i}(f)} \cdot S_{x_i}(f) = \frac{\partial{f}}{\partial{x_i}} \label{eq:con_rel}
+\end{equation}
+
+The Boolean derivative provides a measure of the observability of a particular
+input variable.  When $\partial{f}/\partial{x_i}=0$, $x_i$ is an unobservable
+input.  Therefore, the observability as a whole may be measured by computing
+the output probability of $\partial{f}/\partial{x_i}$ with values close to
+zero indicating that $x_i$ is relatively unobservable and does not greatly affect the two
+cofactors in different ways.  
+
+The consensus of a Boolean function represents the component of the function that is
+independent of a variable, $x_i$.  Thus, very small output probabilities of the consensus
+function can be used to indicate that some function, $f$, is highly dependent upon a variable
+$x_i$.  The degree of dependence of a function with respect to a dependent variable is a commonly used
+heuristic for OBDD variable ordering algorithms \cite{SM92}.  Using the output
+probabilities of the consensus functions could prove to be very useful for this application.
+
+The smoothing operator represents the behavior of a function when the dependence of that
+function on a particular variable, $x_i$, is suppressed.  Smoothing can also be used as a measure
+of the degree that a particular function ,$f$, depends upon a variable, $x_i$.
+
+These quantities have not seen a lot of practical use in the past since they are often difficult
+to compute symbolically.  However, it is possible that the use of the output probability of these
+measures could provide useful insights into the relationship between a function and an input variable.
+Furthermore, it is only necessary to compute the consensus of a function in the Boolean domain
+(i.e., AND the two cofactors together) in order to obtain the output probabilities of any of the three
+operations.
+
+The following equations express the relationship of the output probability computations.
+
+\begin{equation}
+\wp \{ \frac{\partial{f}}{\partial{x_i}} \} = \wp \{ f_{x_i} \cdot \overline{f}_{\overline{x}_i} \} + \wp \{ \overline{f}_{x_i} \cdot f_{\overline{x}_i} \} - \wp \{ f_{x_i} \cdot \overline{f}_{\overline{x}_i} \} \wp \{ \overline{f}_{x_i} \cdot f_{\overline{x}_i} \} \label{eq:pbd}
+\end{equation}
+
+\begin{equation}
+\wp \{ C_{x_i}(f) \} = \wp \{ f_{x_i} \cdot f_{\overline{x}_i} \}  \label{eq:pc}
+\end{equation}
+
+\begin{equation}
+\wp \{ S_{x_i}(f) \} = 1 - \wp \{ \overline{f}_{x_i} \cdot \overline{f}_{\overline{x}_i} \} \label{eq:ps}
+\end{equation}
+
+Equations \ref{eq:pbd}, \ref{eq:pc}, and \ref{eq:ps} indicate that the output probabilities
+of these three important operators can be easily obtained provided that the four fundamental
+probabilities of $\wp \{ f_{x_i} \cdot f_{\overline{x}_i} \}$, 
+$\wp \{ f_{x_i} \cdot \overline{f}_{\overline{x}_i} \}$,
+$ \wp \{ \overline{f}_{x_i} \cdot f_{\overline{x}_i} \}$, and 
+$\wp \{ \overline{f}_{x_i} \cdot \overline{f}_{\overline{x}_i} \}$ are easily obtainable.

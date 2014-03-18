@@ -1,0 +1,55 @@
+\section{Introduction}
+Various types of spectra of a Boolean function provide a unique 
+means of definition, and,
+each individual spectral coefficient provides information
+regarding the behavior of the function over all possible inputs.
+On the other extreme, the function may also be completely
+described by a vector of Boolean values corresponding to the
+output of the function for each possible variable assignment.
+This paper will 
+show how circuit output probabilities can be used as fundamental
+quantities that have simple algebraic relations with both various
+spectral coefficients and Boolean outputs of a digital logic function.
+
+Circuit output probabilities \cite{PM75} were first proposed
+for the analysis of the usefulness of random testing.  Recently,
+these values 
+have found renewed interest due to their close relationship with
+`signal switching probabilities', or `switching activity factors'
+which are used extensively in the development and analysis of
+low power circuitry \cite{GDKW92}  \cite{MP96} \cite{TPD93}.  
+
+This relationship is intriguing since it allows the global behavior
+provided by the spectral coefficients and the local behavior 
+specified by the truth table output vector to be related through a common
+set of values. 
+These relations can be used to develop 
+an efficient means for computing the
+Walsh family of spectra \cite{TN94e} and generalized Reed-Muller
+spectra \cite{TN95a}.  In previous work, the emphasis was
+to find efficient ways to compute individual spectral coefficients
+by quickly computing a specific set of circuit output probabilities.
+The results presented here are a result of the generalization of these ideas
+and thus the main results focus on
+an examination of the inherent relationship between
+output probabilities and other forms of representation.
+
+In addition to using the output probability values to represent a 
+specific Boolean function, it is also shown that properties of the
+functions such as smoothing, cofactors, consensus, and the Boolean
+difference may also be represented by their respective output
+probabilities.  In particular, by using the properties of conditional
+probabilities, we show that only 4 values are required for 
+the computation of the corresponding output probabilities of these 
+functions.
+
+This paper is organized as follows.  First, a brief explanation of methods 
+for computing output probabilities will be described.
+Next, 
+the development of the algebraic relationship between 
+Boolean function output probabilities and corresponding values in the
+Boolean and spectral domains is presented.  This development will include several different
+types of spectra.  
+Finally the paper will include a concluding
+section that contains a summary of the work presented and future
+planned efforts.

@@ -1,0 +1,54 @@
+\section{Output Probability Computations}
+The output probability expression for a Boolean function is a real-valued
+algebraic equation that specifies the probability that the function 
+is valued at logic-`1' given the probabilities that each of the dependent variables
+are valued at logic-`1'.  
+Therefore, the probability
+space consists of $2^n$ experiments where $n$ is the number of dependent
+Boolean variables.  
+If it is assumed that the function is fully specified,
+and that each input is equally likely to be 0 or 1, all probabilities for
+function variables may be set to $\frac{1}{2}$, and the resulting circuit
+output probability will have a value in the interval, $[0,1]$.
+This resulting probability is simply the percentage of minterms that
+cause the function to evaluate to logic-`1'.
+
+The output probabilities were first proposed by Parker and McCluskey
+in the work \cite{PM75} where they were used to evaluate the effectiveness of
+random testing for combinational logic circuits.  Recently, interest has been
+renewed in these quantities 
+since they can be used to form estimates of switching activity factors
+under
+mild assumptions.  Switching activity factors are very
+useful in the prediction of overall power dissipation for CMOS 
+circuitry and are thus a quantity to be minimized for low 
+power design \cite{GDKW92} \cite{MP96} \cite{TPD93}.
+
+In the original paper \cite{PM75} where output probabilities were defined, 
+two methods were presented for the computation
+of the output probability expressions for a logic circuit.  The first method
+consisted of using algebraic expressions and the second relied upon a schematic
+diagram.  Later, a new method was developed for the computation of these quantities
+using the decision diagram data structure \cite{TN94e}.  In particular, the 
+ordered binary decision diagram (OBDD) proposed by Bryant \cite{RB86} was used
+along with algorithms for OBDD manipulation to compute individual output
+probability values.  Most recently, the method in \cite{TN94e} has been improved
+through the use of shared binary decision diagrams (SBDDs) and edge negations
+as described in \cite{DM95}.
+
+Any of the methods mentioned above may be used to determine
+the percentage of minterms that cause a function, $f$, to evaluate to logic-`1'.
+This quantity is denoted here as $\wp \{ f \}$.  As an example, consider the function
+defined by the Boolean expression in Equation \ref{eq:ex1}.
+
+\begin{equation}
+f(x) = x_1 x_3 \overline{x}_6 + x_1 \overline{x}_3 x_4 \overline{x}_6
++ x_1 \overline{x}_3 \overline{x}_4 \overline{x}_5
++ \overline{x}_1 x_2 x_4 \overline{x}_6
++ \overline{x}_1 x_2 \overline{x}_4 \overline{x}_5
++ x_1 \overline{x}_2 \overline{x}_5    \label{eq:ex1}
+\end{equation}
+
+Application of the techniques described above yield the result, $\wp \{ f \} = \frac{5}{8}$.
+Thus, 62.5 \% of the possible $2^6$ minterms will cause $f$ to evaluate to a logic-`1' value.
+

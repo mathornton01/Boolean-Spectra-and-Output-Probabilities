@@ -1,0 +1,250 @@
+\section{Computation of the Spectra Using Output Probabilities}
+This section will describe how output probabilities can be used to compute
+various spectral coefficients directly.  The key idea here is to view
+the computation in terms of a vector-matrix product using an appropriate
+transformation matrix.  Although such products are not computed directly,
+with this viewpoint each transformation matrix row vector can be considered
+as an output vector of some other function called a `constituent function'.
+
+By using Boolean relations between the function to be transformed, $f$, and
+the various constituent functions, $f_c$, output probabilities may be computed and
+used to calculate various spectral coefficients through simple algebraic relations.  
+The advantage of this approach is that
+the spectral coefficients are computed individually allowing complete storage of
+$2^n$ spectral coefficients to be avoided.  Furthermore, if efficient methods are
+used to compute the probability values a savings in computation time also
+results.
+
+\subsection{Walsh Spectrum}
+The Walsh spectral values form several different spectra.  The chief difference
+in the various spectra depend only upon the order that coefficients appear
+\cite{HMM85}.  For example, this set of coefficients may be ordered naturally,
+in sequency order, in dyadic order, or, in revised sequency order.  
+These orders yield the Hadamard-Walsh,
+the Walsh, the Paley-Walsh, and, the Rademacher-Walsh spectra respectively \cite{PB85} \cite{HMM85}.
+In the past, the Hadamard-Walsh has seen much use due to the fact that efficient
+decompositions of the transform matrix may be obtained allowing for `fast
+transform' methods \cite{CT65} \cite{JS69} to be applied.
+
+Since the relationships described here apply only to a single Walsh coefficient,
+the particular coefficient orderings are not important.  Each coefficient
+is described by the particular $f_c$ that corresponds to a transformation
+matrix row vector regardless of the actual location of the row vector in the matrix.
+The Walsh coefficient is denoted by $W_f(f_c)$ where $f$ denotes the coefficient
+is with respect to function $f$ and $f_c$ denotes it is the coefficient resulting
+from the row vector corresponding to constituent function $f_c$.
+
+It is generally the case that the Walsh spectral values are computed by replacing
+all occurrences of logic-1 with the integer, -1, and all occurrences of logic-0
+with the integer, +1.  The actual calculation of the coefficient is then
+carried out by using integer arithmetic.  In terms of computing an inner-product
+of a transformation row vector and an output vector of a function to be transformed,
+it is easy to see that each scalar product to be accumulated is either +1 or -1 in value.
+Furthermore, a scalar product of -1 will only occur when the functions $f$ and $f_c$ have
+different output values for the same set of input variable assignments.
+
+If we consider the equivalence function given by the exclusive-NOR operation (XNOR),
+a function can be formed whose output is logic-1 if and only if both $f$ and $f_c$ are at
+logic-1, $\overline{f \oplus f_c}$.  Furthermore, if the output probability of this function
+is computed we have the percentage of outputs where both $f$ and $f_c$ simultaneously
+output the same value, $\wp \{ \overline{f \oplus f_c} \}$.  The corresponding Walsh
+spectral coefficient can then be obtained by scaling the output probability value by
+$2^n$, where $n$ is the number of variables in $f$.  This is given in Equation
+\ref{eq:walsh_1}.
+
+\begin{equation}
+W_f(f_c) = 2^n [ 1- \wp \{ f \oplus f_c \} ]    \label{eq:walsh_1}
+\end{equation}
+
+The Walsh coefficients in Equation \ref{eq:walsh_1} depend upon the equivalence relation of
+the function being transformed and the constituent function.  However, the spectral 
+coefficient can be computed using Boolean operators other than XOR.  This is accomplished by
+exploiting the probability relationships given in Equations \ref{eq:xor_andor}
+and \ref{eq:and_or}.
+
+\begin{equation}
+\wp \{f+f_c\} = \wp \{ f \cdot f_c \} + \wp \{ f \oplus f_c \}   \label{eq:xor_andor}
+\end{equation}
+
+\begin{equation}
+\wp \{f+f_c\} = \wp \{ f \} + \wp \{ f_c \} - \wp \{ f \cdot f_c \}   \label{eq:and_or}
+\end{equation}
+
+Substituting the relationships in Equations \ref{eq:xor_andor} and 
+\ref{eq:and_or} into Equation 
+\ref{eq:walsh_1} yields the following results.
+
+\begin{equation}
+W_f(f_c) = 2^n [1+2 (\wp \{f \cdot f_c \} - \wp \{f+f_c \} ) ]  \label{eq:walsh_2}
+\end{equation}
+
+\begin{equation}
+W_f(f_c) = 2^n[1+4 \wp \{f \cdot f_c \} - 2 \wp \{f \} - 2 \wp \{f_c \}] \label{eq:walsh_3}
+\end{equation}
+
+\begin{equation}
+W_f(f_c) = 2^n[1-4 \wp \{f + f_c \} + 2 \wp \{f \} + 2 \wp \{f_c \}] \label{eq:walsh_4}
+\end{equation}
+
+The relationships in Equations \ref{eq:walsh_3} and \ref{eq:walsh_4} may be simplified 
+since $\wp \{ f_c \} = \frac{1}{2}$ is easily shown to be true for all $f_c$ except
+the zeroth ordered coefficient, $W_f(0)$, where $\wp \{ 0 \} = 0$.  In addition, the 
+higher ordered Walsh coefficients can be related to the the zeroth ordered coefficient
+through the expressions given in Equations \ref{eq:walsh_5},  \ref{eq:walsh_6}, and
+\ref{eq:walsh_7}.
+
+\begin{equation}
+W_f(0) = 2^n ( 1 - 2 \wp \{ f \} )     \label{eq:walsh_5}
+\end{equation}
+
+\begin{equation}
+W_f(f_c) = 2^n ( 4 \wp \{ f \cdot f_c \} - 1) + W_f(0)    \label{eq:walsh_6}
+\end{equation}
+
+\begin{equation}
+W_f(f_c) = 2^n ( 3 - 4 \wp \{ f + f_c \} ) - W_f(0)    \label{eq:walsh_7}
+\end{equation}
+
+These relations may be rearranged to compute the output probabilities directly from
+the Walsh coefficients if so desired.
+
+\subsection{Reed-Muller Spectrum}
+The Reed-Muller family of spectra consist of $2^n$ distinct transformations.
+These are generally classified according to a {\em polarity number}.  The polarity
+number is used to indicate if a literal is present in complemented or non-complemented
+form in the generalized Reed-Muller Boolean algebraic expression. In terms of the
+Reed-Muller spectra, the polarity number can be considered to uniquely define the
+transformation matrix.  The generalized Reed-Muller spectra have been studied
+and used extensively in the past.  References \cite{DDT78} and \cite{DG86} provide
+excellent background material.
+
+In relating output probabilities to the Reed-Muller spectra considerations must
+be made due to the fact that the RM spectrum is computed over Galois field 2 and
+the output probabilities are real quantities in the interval [0,1].  An isomorphic
+relation is used to address this problem \cite{TN95b}.  Like the
+Walsh spectrum, each of the rows of the RM transformation matrix may be viewed as
+constituent function output vectors.  The constituent functions turn out to be
+all possible products of literals (with complementation or lack thereof) determined
+by the polarity number.  Therefore, any arbitrary RM spectral coefficient may
+be computed as given in Equation \ref{eq:rm1}.
+
+\begin{equation}
+R_f(f_c) = [2^n \wp \{f \cdot f_c \} ] (\bmod{2})   \label{eq:rm1}
+\end{equation}
+
+Using the probability relationships given in Equations \ref{eq:xor_andor} and 
+\ref{eq:and_or}, alternative relationships can be derived as given in the
+following.
+
+\begin{equation}
+R_f(f_c) = [2^n (\wp \{f \} - \wp \{ f_c \} - \wp \{ f+g \} ) ] (\bmod{2}) \label{eq:rm2}
+\end{equation}
+
+\begin{equation}
+R_f(f_c) = [2^n (\wp \{f \oplus f_c \} - \wp \{ f+g \} ) ] (\bmod{2}) \label{eq:rm3}
+\end{equation}
+
+\subsection{Haar Spectrum}
+The Haar spectrum \cite{AR75} \cite{SH81} \cite{MK76} 
+has not seen as much use as the Walsh family or RM transforms
+described above.  This is likely due to the fact that the transformation matrix
+is not symmetric. However, the Haar spectrum and
+in particular the modified Haar spectrum can provide very interesting information
+concerning the correlation of a function with various Shannon decompositions \cite{HMM85}.  The
+Shannon decompositions have seen quite a lot of scrutiny with the recent popularity
+of Decision Diagram (DD) representations of Boolean functions since the DD form can
+often be defined in terms of Shannon decompositions.
+
+The row vectors of the Haar matrix can in fact be described in terms of the AND
+operation of the function to be transformed and various cubes formed from the 
+literals.  This is in contrast to the Walsh and RM transformation matrices where the
+respective $f_c$ functions were defined with total independence of the function to
+be transformed.  The reason for this difference in row vector definition
+is because the Haar transform
+does not give totally global information, rather it gives information regarding
+the correlation of a function with its various cofactors.  However, like the previous
+approaches, each Haar coefficient can be computed as an algebraic relation of various
+probability values and hence the Haar spectrum is also directly linked with output
+probability calculations.
+
+Like the Walsh family of transforms, the output vector of the function to be transformed
+generally contains integers with -1 representing logic-1 and +1 representing logic-0.
+With this viewpoint, we can define the number of matches between a particular transformation
+matrix row vector as the number of times the row vector and function vector components are simultaneously
+equal to -1 or +1.  As an example of the modified Haar transform, consider the following 
+transformation matrix for a 3-variable function is shown in Figure \ref{haar_mat}.  
+Each of the constituent Boolean functions are
+given to the left of their respective row vectors.  Note that the matrix contains a 0 value
+in addition to the 1 and -1 quantities which represent logic levels.  Since some of the
+rows represent constituent functions that are cofactors, the output space is less than $2^3$
+and the presence of a 0 value acts as a place holder.
+
+\begin{figure}
+\begin{flushleft}
+\[
+\begin{array}{rl}
+\begin{array}{r}
+f \\
+x_1 \\
+x_2 \cdot f_{\overline{x}_1} \\
+x_2 \cdot f_{x_1} \\
+x_3 \cdot f_{\overline{x}_1 \overline{x}_2} \\
+x_3 \cdot f_{\overline{x}_1 x_2} \\
+x_3 \cdot f_{ x_1 \overline{x}_2} \\
+x_3 \cdot f_{x_1 x_2} \\
+\end{array} &
+\! \! \! \! \! \! \! \! \! \left[ \! \!
+\begin{array}{rrrrrrrr}
+1 & \! 1 & \! 1 & \! 1 & \! 1 & \! 1 & \! 1 & \! 1 \\
+1 & \! 1 & \! 1 & \! 1 & \! -1 & \! -1 & \! -1 & \! -1 \\
+1 & \! 1 & \! -1 & \! -1 & \! 0 & \! 0 & \! 0 & \! 0 \\
+0 & \! 0 & \! 0 & \! 0 & \! 1 & \! 1 & \! -1 & \! -1 \\
+1 & \! -1 & \! 0 & \! 0 & \! 0 & \! 0 & \! 0 & \! 0 \\
+0 & \! 0 & \! 1 & \! -1 & \! 0 & \! 0 & \! 0 & \! 0 \\
+0 & \! 0 & \! 0 & \! 0 & \! 1 & \! -1 & \! 0 & \! 0 \\
+0 & \! 0 & \! 0 & \! 0 & \! 0 & \! 0 & \! 1 & \! -1 \\
+\end{array} \! \! \right]
+\end{array} \]
+\end{flushleft}
+\caption{Example of Modified Haar Transformation Matrix for $n=3$} \label{haar_mat}
+\end{figure}
+
+By applying the same principles as those used to determine the algebraic relationships
+between output probabilities and the Walsh family and RM transforms, we can formulate the
+Haar transform relationships.  The presence of cofactors in the Haar constituent functions
+can be handled by using the relationship in Equation \ref{eq:baye} to represent these quantities
+as output probabilities of the AND of the function to be transformed with its respective
+dependent literals.  Note also that the maximum absolute value of a Haar spectral coefficient
+varies depending on the order of the coefficient.  This is due to the reduction in 
+the size of the range of the constituent functions containing cofactors.  The following table
+contains symbols for each of the Haar coefficients, $H_i$, values that indicate the size of the
+constituent function range, $i$ and $n$, and probability expressions that evaluate whether the
+function to be transformed and the constituent function simultaneously evaluate to
+logic-0, $p_{m0}$, or, evaluate to logic-1, $p_{m1}$.
+
+\renewcommand{\arraystretch}{1.3}
+\begin{table} 
+\caption{Relationship of the Haar Spectrum and Output Probabilities} \label{haar_tab}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}  \hline
+{\bf SYMBOL} & {\bf $i$} & {\bf $n$ } & {\bf $p_{m0}$ } & {\bf $p_{m1}$ } \\ \hline \hline
+$H_0$ & 0 & 3 & $\wp \{ f \cdot 0 \}$ & $\wp \{ \overline{f} \cdot \overline{0} \}$ \\ \hline
+$H_1$ & 0 & 3 & $\wp \{ f \cdot x_1 \}$ & $\wp \{ \overline{f} \cdot \overline{x}_1 \}$ \\ \hline
+$H_2$ & 1 & 2 & $\wp \{ f \cdot \overline{x_1} \cdot x_2 \} / \wp \{ \overline{x}_1 \}$ & $\wp \{ \overline{f \cdot \overline{x}_1} \cdot \overline{x}_2 \} / \wp \{ \overline{x}_1 \}$ \\ \hline
+$H_3$ & 1 & 2 & $\wp \{ f \cdot x_1 \cdot x_2 \} / \wp \{ x_1 \}$ & $\wp \{ \overline{f \cdot x_1} \cdot \overline{x}_2 \} / \wp \{ x_1 \}$ \\ \hline
+$H_4$ & 2 & 1 & $\wp \{ f \cdot \overline{x}_1 \cdot \overline{x}_2 \cdot x_3 \} / \wp \{ \overline{x}_1 \cdot \overline{x}_2 \}$ & $\wp \{ \overline{f \cdot \overline{x}_1 \cdot \overline{x}_2} \cdot \overline{x}_3 \} / \wp \{ \overline{x}_1 \cdot \overline{x}_2 \}$ \\ \hline
+$H_5$ & 2 & 1 & $\wp \{ f \cdot \overline{x}_1 \cdot {x}_2 \cdot x_3 \} / \wp \{ \overline{x}_1 \cdot x_2 \}$ & $\wp \{ \overline{f \cdot \overline{x}_1 \cdot x_2} \cdot \overline{x}_3 \} / \wp \{ \overline{x}_1 \cdot x_2 \}$ \\ \hline
+$H_6$ & 2 & 1 & $\wp \{ f \cdot x_1 \cdot \overline{x}_2 \cdot x_3 \} / \wp \{ x_1 \cdot \overline{x}_2 \}$ & $\wp \{ \overline{f \cdot x_1 \cdot \overline{x}_2} \cdot \overline{x}_3 \} / \wp \{ x_1 \cdot \overline{x}_2 \}$ \\ \hline
+$H_7$ & 2 & 1 & $\wp \{ f \cdot x_1 \cdot x_2 \cdot x_3 \} / \wp \{ x_1 \cdot x_2 \}$ & $\wp \{ \overline{f \cdot x_1 \cdot x_2} \cdot \overline{x}_3 \} / \wp \{ x_1 \cdot x_2 \}$ \\ \hline \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Using the notation introduced in Table \ref{haar_tab}, we can write an algebraic equation
+to compute the value of a Haar spectral coefficient in terms of the output probabilities
+used to compute $p_{m0}$ and $p_{m1}$.
+
+\begin{equation}
+H = 2^{n-i} [ 2 ( p_{m0} + p_{m1} ) - 1 ] \label{eq:haar_eqn}
+\end{equation}
+
