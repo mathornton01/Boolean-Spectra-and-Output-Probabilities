@@ -7,7 +7,7 @@ to show how some interesting relationships may be derived and we show
 how output probability values may be related to cover sets of Boolean functions.
 Unless otherwise noted, the conditioned quantity will always be dependent
 upon the function of interest.  Therefore, the probability space for the
-conditional output probability, $\wp \{ f | f_c \}$, has a size of $2^{n-m}$ where
+conditional output probability, $p(f | f_c)$, has a size of $2^{n-m}$ where
 $n$ is the number of dependent variables of $f$ and $m$ is the number of mutually
 dependent variables of $f$ and $f_c$.
 
@@ -36,30 +36,30 @@ determine the output probability of the cofactors.
 Consider the cofactor, $f_1$, for a particular variable, $x_i$.  The output probability
 is computed as the total number of times $f_1 = 1$ divided by $2^{n-1}$ if $f$ is a 
 completely specified function of $n$ variables.  In terms of probability theory,
-this becomes the conditional probability value, $\wp \{f | x_i \}$.  Using Baye's Rule
+this becomes the conditional probability value, $p(f | x_i)$.  Using Bayes' Theorem
 the conditional probability may be expressed as given in Equation \ref{eq:baye}.
-Note that $\wp \{ x_i \} \neq 0$ is always necessarily true when Equation \ref{eq:baye} is
+Note that $p(x_i)$ $\neq 0$ is always necessarily true when Equation \ref{eq:baye} is
 used.  This is due to the fact that the cofactors are always computed in terms of dependent
-$x_i$.  The trivial case where $x_i=0$ and hence $\wp \{ x_i \} = 0$ indicates that $f$ does not
+$x_i$.  The trivial case where $x_i=0$ and hence $p(x_i) = 0$ indicates that $f$ does not
 depend upon $x_i$ and is thus not applicable to Equation \ref{eq:baye}, indeed, in this case
 $x_i$ is not a Boolean variable, it is a Boolean constant.
 
 \begin{equation}
-\wp \{ f | x_i \} = \frac{\wp \{f \cdot x_i \} }{\wp \{x_i \} }   \label{eq:baye}
+p(f | x_i) = \frac{p(f \cdot x_i) }{p(x_i) }   \label{eq:baye}
 \end{equation}
 
-Since it is typical to deal with fully specified functions, $\wp \{ x_i \} = \frac{1}{2}$,
-and Equation \ref{eq:baye} simplifies to $\wp \{ f | x_i \} = 2 \cdot \wp \{f \cdot x_i \}$.
+Since it is typical to deal with fully specified functions, $p(x_i) = \frac{1}{2}$,
+and Equation \ref{eq:baye} simplifies to $p(f|x_i) = 2 \cdot p(f \cdot x_i)$.
 
 \subsection{Output Probabilities and Covers of Boolean Functions}
 It is possible to compute conditional probabilities for more complex constituent
-functions, $\wp \{ f | f_c \}$.  The use of Baye's theorem allows a very succinct
+functions, $p(f|f_c)$.  The use of Baye's theorem allows a very succinct
 method for determining if a given function $f$ covers another function, $f_c$.
 Lemma \ref{baye_cov} states and proves this result.
 
 \begin{lemma}   \label{baye_cov}
 A function $f$ covers another function, $f_c$, if and only if
-$\wp \{f_c | f \} = \wp \{ f \}$.
+$p(f_c|f) = p(f)$.
 \end{lemma}
 
 \noindent
@@ -67,15 +67,15 @@ $\wp \{f_c | f \} = \wp \{ f \}$.
 By definition, a cover of function $f_c$ by another function, $f$
 means that for all $f_c=1$, $f$ is also at a logic `1' value.
 In terms of conditional probabilities, this is stated as
-$\wp \{ f_c | f \} = 1$.  Substituting this expression into 
+$p(f_c|f) = 1$.  Substituting this expression into 
 Equation \ref{eq:baye} yields the following result.
 
 \begin{equation}
-\wp \{ f \cdot f_c \} = \wp \{ f \}    \label{eq:cover_result}
+p(f\cdotf_c)=p(f)\label{eq:cover_result}
 \end{equation}
 
 This substitution is valid for all cases where $f$ and $f_c$ have mutual dependence
-on a common subset of variables.  This dependence assumption prevents $\wp \{ f_c \} =0$.
+on a common subset of variables.  This dependence assumption prevents $p(f_c)=0$.
 It is trivial to ensure dependence since it is only necessary to show that at least
 one common variable is present in some canonical form of $f$ and $f_c$.
 
@@ -104,65 +104,65 @@ conditional probabilities of pairs of cubes and their relationship.
 
 \begin{lemma}   \label{tot_redun}
 Given two cubes $c_i$ and $c_j$ from a cover set of a function $f$,
-$\wp \{ c_i | c_j \} = 1$ if and only if $c_i$ is totally redundant.
+$p(c_i|c_j)=1$ if and only if $c_i$ is totally redundant.
 \end{lemma}
 
 \noindent
 {\bf Proof:} \\
-Since $\wp \{ c_j \} \neq 0$, the conditional probability can be computed 
+Since $p(c_j) \neq 0$, the conditional probability can be computed 
 as:
 
 \begin{equation}
-\wp \{ c_i | c_j \} = \frac{ \wp \{ c_i \cdot c_j \} }{ \wp \{ c_j \}} \label{eq:cub_baye}
+p(c_i|c_j) = \frac{p(c_i \cdot c_j)}{p(c_j)} \label{eq:cub_baye}
 \end{equation}
 
 When cube $c_i$ is totally redundant, $c_i \cdot c_j = c_j$.  Substituting
 this result into Equation \ref{eq:cub_baye} it is seen that
-$\wp \{ c_i | c_j \} = 1$.  
+$p(c_i|c_j)=1$.  
 
 \hfill $\Box$
 
 \begin{lemma}   \label{disjoint}
 Given two cubes $c_i$ and $c_j$ from a cover set of a function $f$,
-$\wp \{ c_i | c_j \} = 0$ if and only if $c_i$ and $c_j$ are disjoint.
+$p(c_i|c_j)=0$ if and only if $c_i$ and $c_j$ are disjoint.
 \end{lemma}
 
 \noindent
 {\bf Proof:} \\
-Since $\wp \{ c_j \} \neq 0$, the conditional probability can be computed 
+Since $p(c_j) \neq 0$, the conditional probability can be computed 
 as:
 
 \begin{equation}
-\wp \{ c_i | c_j \} = \frac{ \wp \{ c_i \cdot c_j \} }{ \wp \{ c_j \}}
+p(c_i|c_j) = \frac{p)(c_i \cdot c_j)}{p(c_j)}
 \end{equation}
 
 When the cubes $c_i$ and $c_j$ are disjoint, $c_i \cdot c_j  = 0$.
 Thus, the conditional probability becomes 
-$\wp \{ c_i | c_j \} = \frac{ \wp \{ 0 \} } { \wp \{ c_j \}} = 0$.
+$p(c_i|c_j)=\frac{p(0)}{p(c_j)}=0$.
 
 \hfill $\Box$
 
 \begin{lemma}   \label{par_redun}
 Given two cubes $c_i$ and $c_j$ from a cover set of a function $f$,
-$\wp \{ c_i | c_j \} = p$, where $p$ lies in the interval $(0,1)$
+$p)(c_i|c_j)=p$, where $p$ lies in the interval $(0,1)$
 if and only if $c_i$ and $c_j$ are partially redundant.
 \end{lemma}
 
 \noindent
 {\bf Proof:} \\
-When $\wp \{ c_i | c_j \} = p$, there is necessarily some dependence between
-$c_i$ and $c_j$, therefore they cannot be disjoint and $\wp \{ c_i | c_j \} \neq 0$.
+When $p(c_i|c_j)=p$, there is necessarily some dependence between
+$c_i$ and $c_j$, therefore they cannot be disjoint and $p(c_i|c_j) \neq 0$.
 Further, since $p < 1$, $c_i$ is not totally redundant.  The only possible remaining
 relationship between $c_i$ and $c_j$ is that they are partially redundant.
 
 \hfill $\Box$
 
 When a cube is a specific minterm, $m_i$, the conditional probability becomes
-$\wp \{ f | m_i \} = 0$ or $\wp \{f | m_i \} = 1$.  This is due to the
+$p(f|m_i)=0$ or $p(f|m_i)=1$.  This is due to the
 fact that the probability space is reduced in size to $2^{n-n} = 1$, hence
 it consists of a single experiment.  The outcome of this experiment is that the
 function either covers the minterm, or, does not.  Hence, a conditional
-probability, $\wp \{ f | m_i \}$ indicates if the function depends upon $m_i$ and
+probability, $p(f|m_i)$ indicates if the function depends upon $m_i$ and
 the real value of the probability is the same as the Boolean value of the function when it is
 evaluated at that particular minterm.  This result comes directly from the above lemmas 
 since it is impossible for a specific minterm and a function to be partially redundant.
@@ -220,20 +220,20 @@ operations.
 The following equations express the relationship of the output probability computations.
 
 \begin{equation}
-\wp \{ \frac{\partial{f}}{\partial{x_i}} \} = \wp \{ f_{x_i} \cdot \overline{f}_{\overline{x}_i} \} + \wp \{ \overline{f}_{x_i} \cdot f_{\overline{x}_i} \} - \wp \{ f_{x_i} \cdot \overline{f}_{\overline{x}_i} \} \wp \{ \overline{f}_{x_i} \cdot f_{\overline{x}_i} \} \label{eq:pbd}
+p(\frac{\partial{f}}{\partial{x_i}})=p(f_{x_i}\cdot\overline{f}_{\overline{x}_i})+p(\overline{f}_{x_i}\cdot f_{\overline{x}_i})-p(f_{x_i} \cdot \overline{f}_{\overline{x}_i}) p( \overline{f}_{x_i} \cdot f_{\overline{x}_i}) \label{eq:pbd}
 \end{equation}
 
 \begin{equation}
-\wp \{ C_{x_i}(f) \} = \wp \{ f_{x_i} \cdot f_{\overline{x}_i} \}  \label{eq:pc}
+p(C_{x_i}(f))=p(f_{x_i} \cdot f_{\overline{x}_i})  \label{eq:pc}
 \end{equation}
 
 \begin{equation}
-\wp \{ S_{x_i}(f) \} = 1 - \wp \{ \overline{f}_{x_i} \cdot \overline{f}_{\overline{x}_i} \} \label{eq:ps}
+p(S_{x_i}(f))=1-p(\overline{f}_{x_i} \cdot \overline{f}_{\overline{x}_i}) \label{eq:ps}
 \end{equation}
 
 Equations \ref{eq:pbd}, \ref{eq:pc}, and \ref{eq:ps} indicate that the output probabilities
 of these three important operators can be easily obtained provided that the four fundamental
-probabilities of $\wp \{ f_{x_i} \cdot f_{\overline{x}_i} \}$, 
-$\wp \{ f_{x_i} \cdot \overline{f}_{\overline{x}_i} \}$,
-$ \wp \{ \overline{f}_{x_i} \cdot f_{\overline{x}_i} \}$, and 
-$\wp \{ \overline{f}_{x_i} \cdot \overline{f}_{\overline{x}_i} \}$ are easily obtainable.
+probabilities of $p(f_{x_i} \cdot f_{\overline{x}_i})$, 
+$p(f_{x_i} \cdot \overline{f}_{\overline{x}_i})$,
+$p(\overline{f}_{x_i} \cdot f_{\overline{x}_i})$, and 
+$p(\overline{f}_{x_i} \cdot \overline{f}_{\overline{x}_i})$ are easily obtainable.

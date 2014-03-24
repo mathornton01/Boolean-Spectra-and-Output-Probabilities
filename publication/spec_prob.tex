@@ -47,13 +47,13 @@ If we consider the equivalence function given by the exclusive-NOR operation (XN
 a function can be formed whose output is logic-1 if and only if both $f$ and $f_c$ are at
 logic-1, $\overline{f \oplus f_c}$.  Furthermore, if the output probability of this function
 is computed we have the percentage of outputs where both $f$ and $f_c$ simultaneously
-output the same value, $\wp \{ \overline{f \oplus f_c} \}$.  The corresponding Walsh
+output the same value, $p(\overline{f \oplus f_c})$.  The corresponding Walsh
 spectral coefficient can then be obtained by scaling the output probability value by
 $2^n$, where $n$ is the number of variables in $f$.  This is given in Equation
 \ref{eq:walsh_1}.
 
 \begin{equation}
-W_f(f_c) = 2^n [ 1- \wp \{ f \oplus f_c \} ]    \label{eq:walsh_1}
+W_f(f_c) = 2^n [ 1-p(f \oplus f_c)]    \label{eq:walsh_1}
 \end{equation}
 
 The Walsh coefficients in Equation \ref{eq:walsh_1} depend upon the equivalence relation of
@@ -63,11 +63,11 @@ exploiting the probability relationships given in Equations \ref{eq:xor_andor}
 and \ref{eq:and_or}.
 
 \begin{equation}
-\wp \{f+f_c\} = \wp \{ f \cdot f_c \} + \wp \{ f \oplus f_c \}   \label{eq:xor_andor}
+p(f+f_c)=p(f \cdot f_c)+p(f \oplus f_c)   \label{eq:xor_andor}
 \end{equation}
 
 \begin{equation}
-\wp \{f+f_c\} = \wp \{ f \} + \wp \{ f_c \} - \wp \{ f \cdot f_c \}   \label{eq:and_or}
+p(f+f_c)=p(f)+p(f_c)-p(f \cdot f_c)   \label{eq:and_or}
 \end{equation}
 
 Substituting the relationships in Equations \ref{eq:xor_andor} and 
@@ -75,34 +75,34 @@ Substituting the relationships in Equations \ref{eq:xor_andor} and
 \ref{eq:walsh_1} yields the following results.
 
 \begin{equation}
-W_f(f_c) = 2^n [1+2 (\wp \{f \cdot f_c \} - \wp \{f+f_c \} ) ]  \label{eq:walsh_2}
+W_f(f_c) = 2^n [1+2 (p(f \cdot f_c)-p(f+f_c))]  \label{eq:walsh_2}
 \end{equation}
 
 \begin{equation}
-W_f(f_c) = 2^n[1+4 \wp \{f \cdot f_c \} - 2 \wp \{f \} - 2 \wp \{f_c \}] \label{eq:walsh_3}
+W_f(f_c) = 2^n[1+4p(f \cdot f_c)-2p(f)-2p(f_c)] \label{eq:walsh_3}
 \end{equation}
 
 \begin{equation}
-W_f(f_c) = 2^n[1-4 \wp \{f + f_c \} + 2 \wp \{f \} + 2 \wp \{f_c \}] \label{eq:walsh_4}
+W_f(f_c) = 2^n[1-4p(f + f_c)+2p(f)+2p(f_c)] \label{eq:walsh_4}
 \end{equation}
 
 The relationships in Equations \ref{eq:walsh_3} and \ref{eq:walsh_4} may be simplified 
-since $\wp \{ f_c \} = \frac{1}{2}$ is easily shown to be true for all $f_c$ except
-the zeroth ordered coefficient, $W_f(0)$, where $\wp \{ 0 \} = 0$.  In addition, the 
+since $p(f_c)=\frac{1}{2}$ is easily shown to be true for all $f_c$ except
+the zeroth ordered coefficient, $W_f(0)$, where $p(0)=0$.  In addition, the 
 higher ordered Walsh coefficients can be related to the the zeroth ordered coefficient
 through the expressions given in Equations \ref{eq:walsh_5},  \ref{eq:walsh_6}, and
 \ref{eq:walsh_7}.
 
 \begin{equation}
-W_f(0) = 2^n ( 1 - 2 \wp \{ f \} )     \label{eq:walsh_5}
+W_f(0)=2^n(1-2p(f))     \label{eq:walsh_5}
 \end{equation}
 
 \begin{equation}
-W_f(f_c) = 2^n ( 4 \wp \{ f \cdot f_c \} - 1) + W_f(0)    \label{eq:walsh_6}
+W_f(f_c) = 2^n ( 4p(f \cdot f_c) - 1) + W_f(0)    \label{eq:walsh_6}
 \end{equation}
 
 \begin{equation}
-W_f(f_c) = 2^n ( 3 - 4 \wp \{ f + f_c \} ) - W_f(0)    \label{eq:walsh_7}
+W_f(f_c)=2^n(3-4p(f + f_c))-W_f(0)    \label{eq:walsh_7}
 \end{equation}
 
 These relations may be rearranged to compute the output probabilities directly from
@@ -129,7 +129,7 @@ by the polarity number.  Therefore, any arbitrary RM spectral coefficient may
 be computed as given in Equation \ref{eq:rm1}.
 
 \begin{equation}
-R_f(f_c) = [2^n \wp \{f \cdot f_c \} ] (\bmod{2})   \label{eq:rm1}
+R_f(f_c) = [2^np(f \cdot f_c)] (\bmod{2})   \label{eq:rm1}
 \end{equation}
 
 Using the probability relationships given in Equations \ref{eq:xor_andor} and 
@@ -137,11 +137,11 @@ Using the probability relationships given in Equations \ref{eq:xor_andor} and
 following.
 
 \begin{equation}
-R_f(f_c) = [2^n (\wp \{f \} - \wp \{ f_c \} - \wp \{ f+g \} ) ] (\bmod{2}) \label{eq:rm2}
+R_f(f_c) = [2^n (p(f)-p(f_c)-p(f+g))] (\bmod{2}) \label{eq:rm2}
 \end{equation}
 
 \begin{equation}
-R_f(f_c) = [2^n (\wp \{f \oplus f_c \} - \wp \{ f+g \} ) ] (\bmod{2}) \label{eq:rm3}
+R_f(f_c) = [2^n (p(f \oplus f_c)-p(f+g))] (\bmod{2}) \label{eq:rm3}
 \end{equation}
 
 \subsection{Haar Spectrum}
@@ -228,14 +228,14 @@ logic-0, $p_{m0}$, or, evaluate to logic-1, $p_{m1}$.
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}  \hline
 {\bf SYMBOL} & {\bf $i$} & {\bf $n$ } & {\bf $p_{m0}$ } & {\bf $p_{m1}$ } \\ \hline \hline
-$H_0$ & 0 & 3 & $\wp \{ f \cdot 0 \}$ & $\wp \{ \overline{f} \cdot \overline{0} \}$ \\ \hline
-$H_1$ & 0 & 3 & $\wp \{ f \cdot x_1 \}$ & $\wp \{ \overline{f} \cdot \overline{x}_1 \}$ \\ \hline
-$H_2$ & 1 & 2 & $\wp \{ f \cdot \overline{x_1} \cdot x_2 \} / \wp \{ \overline{x}_1 \}$ & $\wp \{ \overline{f \cdot \overline{x}_1} \cdot \overline{x}_2 \} / \wp \{ \overline{x}_1 \}$ \\ \hline
-$H_3$ & 1 & 2 & $\wp \{ f \cdot x_1 \cdot x_2 \} / \wp \{ x_1 \}$ & $\wp \{ \overline{f \cdot x_1} \cdot \overline{x}_2 \} / \wp \{ x_1 \}$ \\ \hline
-$H_4$ & 2 & 1 & $\wp \{ f \cdot \overline{x}_1 \cdot \overline{x}_2 \cdot x_3 \} / \wp \{ \overline{x}_1 \cdot \overline{x}_2 \}$ & $\wp \{ \overline{f \cdot \overline{x}_1 \cdot \overline{x}_2} \cdot \overline{x}_3 \} / \wp \{ \overline{x}_1 \cdot \overline{x}_2 \}$ \\ \hline
-$H_5$ & 2 & 1 & $\wp \{ f \cdot \overline{x}_1 \cdot {x}_2 \cdot x_3 \} / \wp \{ \overline{x}_1 \cdot x_2 \}$ & $\wp \{ \overline{f \cdot \overline{x}_1 \cdot x_2} \cdot \overline{x}_3 \} / \wp \{ \overline{x}_1 \cdot x_2 \}$ \\ \hline
-$H_6$ & 2 & 1 & $\wp \{ f \cdot x_1 \cdot \overline{x}_2 \cdot x_3 \} / \wp \{ x_1 \cdot \overline{x}_2 \}$ & $\wp \{ \overline{f \cdot x_1 \cdot \overline{x}_2} \cdot \overline{x}_3 \} / \wp \{ x_1 \cdot \overline{x}_2 \}$ \\ \hline
-$H_7$ & 2 & 1 & $\wp \{ f \cdot x_1 \cdot x_2 \cdot x_3 \} / \wp \{ x_1 \cdot x_2 \}$ & $\wp \{ \overline{f \cdot x_1 \cdot x_2} \cdot \overline{x}_3 \} / \wp \{ x_1 \cdot x_2 \}$ \\ \hline \hline
+$H_0$ & 0 & 3 & $p(f \cdot 0)$ & $p(\overline{f} \cdot \overline{0})$ \\ \hline
+$H_1$ & 0 & 3 & $p(f \cdot x_1)$ & $p(\overline{f} \cdot \overline{x}_1)$ \\ \hline
+$H_2$ & 1 & 2 & $p(f \cdot \overline{x_1} \cdot x_2) /p(\overline{x}_1)$ & $p(\overline{f \cdot \overline{x}_1} \cdot \overline{x}_2) /p(\overline{x}_1)$ \\ \hline
+$H_3$ & 1 & 2 & $p(f \cdot x_1 \cdot x_2) /p(x_1)$ & $p(\overline{f \cdot x_1} \cdot \overline{x}_2) /p(x_1)$ \\ \hline
+$H_4$ & 2 & 1 & $p(f \cdot \overline{x}_1 \cdot \overline{x}_2 \cdot x_3) /p( \overline{x}_1 \cdot \overline{x}_2)$ & $p(\overline{f \cdot \overline{x}_1 \cdot \overline{x}_2} \cdot \overline{x}_3) /p(\overline{x}_1 \cdot \overline{x}_2)$ \\ \hline
+$H_5$ & 2 & 1 & $p(f \cdot \overline{x}_1 \cdot {x}_2 \cdot x_3) /p(\overline{x}_1 \cdot x_2)$ & $p(\overline{f \cdot \overline{x}_1 \cdot x_2} \cdot \overline{x}_3) /p(\overline{x}_1 \cdot x_2)$ \\ \hline
+$H_6$ & 2 & 1 & $p(f \cdot x_1 \cdot \overline{x}_2 \cdot x_3) /p(x_1 \cdot \overline{x}_2)$ & $p(\overline{f \cdot x_1 \cdot \overline{x}_2} \cdot \overline{x}_3) /p(x_1 \cdot \overline{x}_2)$ \\ \hline
+$H_7$ & 2 & 1 & $p(f \cdot x_1 \cdot x_2 \cdot x_3) /p(x_1 \cdot x_2)$ & $p(\overline{f \cdot x_1 \cdot x_2} \cdot \overline{x}_3) /p(x_1 \cdot x_2)$ \\ \hline \hline
 \end{tabular}
 \end{center}
 \end{table}
